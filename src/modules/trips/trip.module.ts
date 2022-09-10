@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TripController } from './controllers/trip.controller';
-import { TripService } from './services/trip.service';
+import { CqrsModule } from '@nestjs/cqrs';
+
+import { controllers } from './controllers';
+import { services } from './services';
+import { commandHandlers } from './commands/handlers';
 
 @Module({
-  controllers: [TripController],
-  providers: [TripService],
+  imports: [CqrsModule],
+  controllers: [...controllers],
+  providers: [...services, ...commandHandlers],
 })
 export class TripModule {}
