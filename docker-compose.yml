@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  bikeramp-postgres:
+    image: postgres:14
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'bikeramp'
+      POSTGRES_PASSWORD: 'bikeramp'
+      POSTGRES_DB: 'bikeramp'
+
   bikeramp-api:
     build:
       context: .
@@ -7,5 +17,15 @@ services:
       - '3100:3100'
     environment:
       PORT: 3100
+      TYPEORM_HOST: 'bikeramp-postgres'
+      TYPEORM_USERNAME: 'bikeramp'
+      TYPEORM_PASSWORD: 'bikeramp'
+      TYPEORM_DATABASE: 'bikeramp'
+      TYPEORM_PORT: '5432'
+      TYPEORM_LOGGING: 'true'
+      TYPEORM_MIGRATIONS_DIR: 'src/migrations'
+      TYPEORM_MIGRATIONS_RUN: 'true'
     volumes:
       - .:/code
+    depends_on:
+      - 'bikeramp-postgres'
