@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  bikeramp-api:
+    build:
+      context: .
+    ports:
+      - '3100:3100'
+    environment:
+      PORT: 3100
+    volumes:
+      - .:/code
