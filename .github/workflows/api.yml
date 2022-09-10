@@ -1,0 +1,28 @@
+name: BIKERAMP API CI
+
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: .
+
+      - name: Run build
+        working-directory: .
+        run: yarn build
+
+      - name: Run lint
+        working-directory: .
+        run: yarn lint
+
+      - name: Run tests
+        working-directory: .
+        run: yarn test
