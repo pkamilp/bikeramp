@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigSchemaValidator } from './config/schema.validator';
+import { TripModule } from './modules/trips/trip.module';
 
 @Module({
   imports: [
@@ -27,8 +26,7 @@ import { ConfigSchemaValidator } from './config/schema.validator';
       }),
       inject: [ConfigService],
     }),
+    TripModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
