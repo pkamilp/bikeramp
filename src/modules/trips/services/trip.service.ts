@@ -8,9 +8,14 @@ import { CreateTripCommand } from '../commands/create-trip.command';
 export class TripService {
   constructor(private commandBus: CommandBus) {}
 
-  createTrip(startAddress: string, destinationAddress: string, price: number, date: DateTime) {
+  createTrip(
+    startAddress: string,
+    destinationAddress: string,
+    price: number,
+    deliveryDate: DateTime,
+  ) {
     return this.commandBus.execute(
-      new CreateTripCommand(startAddress, destinationAddress, price, date),
+      new CreateTripCommand(startAddress, destinationAddress, price, deliveryDate),
     );
   }
 }
