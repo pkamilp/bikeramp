@@ -23,6 +23,7 @@ import { TripModule } from './modules/trips/trip.module';
         database: configService.get('TYPEORM_DATABASE'),
         logging: configService.get('TYPEORM_LOGGING'),
         migrationsRun: configService.get('TYPEORM_MIGRATIONS_RUN'),
+        autoLoadEntities: true,
       }),
       inject: [ConfigService],
     }),
