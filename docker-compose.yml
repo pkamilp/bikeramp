@@ -9,6 +9,8 @@ services:
       POSTGRES_USER: 'bikeramp'
       POSTGRES_PASSWORD: 'bikeramp'
       POSTGRES_DB: 'bikeramp'
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
 
   bikeramp-api:
     build:

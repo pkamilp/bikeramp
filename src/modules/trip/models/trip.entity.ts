@@ -1,9 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { AggregateRoot } from '@nestjs/cqrs';
 import { DateTime } from 'luxon';
 
+import { CurrencyEnum } from './currency.enum';
+import { BaseEntity } from '../../database/base.entity';
+import { DateTimeTransformer } from '../../database/datetime.transformer';
+
 @Entity({ name: 'trips' })
-export class Trip extends AggregateRoot {
+export class Trip extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   public id!: string;
 
@@ -16,15 +19,16 @@ export class Trip extends AggregateRoot {
   @Column()
   public distance!: number;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 8, scale: 2 })
   public price!: number;
 
   @Column()
-  public currency!: string;
+  public currency!: CurrencyEnum;
 
   @Column({
     type: 'timestamptz',
     name: 'delivery_date',
+    transformer: new DateTimeTransformer(),
   })
   public deliveryDate!: DateTime;
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsDateString, Min } from 'class-validator';
+import { IsNotEmpty, IsDateString, Min, IsNumber } from 'class-validator';
 
 export class CreateTripDto {
   @ApiProperty()
@@ -11,6 +11,7 @@ export class CreateTripDto {
   destination_address: string;
 
   @ApiProperty()
+  @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   price: number;
 
