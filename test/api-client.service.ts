@@ -18,4 +18,12 @@ export class ApiClientService {
       date: date.toISO(),
     });
   }
+
+  getWeeklyStats() {
+    return request(this.url).get('/stats/weekly');
+  }
+
+  getMonthlyStats() {
+    return request(this.url).get('/stats/monthly');
+  }
 }
