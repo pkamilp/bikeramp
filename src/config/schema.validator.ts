@@ -8,4 +8,5 @@ export const ConfigSchemaValidator = Joi.object({
   TYPEORM_DATABASE: Joi.string().required(),
   TYPEORM_LOGGING: Joi.boolean().required(),
   TYPEORM_MIGRATIONS_RUN: Joi.boolean().required(),
+  GOOGLE_MAPS_API_KEY: Joi.string().required(),
 });

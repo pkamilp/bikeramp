@@ -27,6 +27,7 @@ services:
       TYPEORM_LOGGING: 'true'
       TYPEORM_MIGRATIONS_DIR: 'src/migrations'
       TYPEORM_MIGRATIONS_RUN: 'false'
+      GOOGLE_MAPS_API_KEY: 'AIzaSyCGo1fflZ9-DqH_6yqSMqeA6GLHqK38w6o'
     volumes:
       - .:/code
     depends_on:
