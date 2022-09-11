@@ -22,6 +22,7 @@
     "typeorm": "typeorm-ts-node-commonjs -d src/datasource.ts"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",

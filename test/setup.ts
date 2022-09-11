@@ -4,6 +4,8 @@ import { ApiClientService } from './api-client.service';
 import { TypeOrmConfigService } from '../src/modules/database/typeorm-config.service';
 import { MockTypeOrmConfigService } from './mock-typeorm-config.service';
 import { ValidationPipe } from '@nestjs/common';
+import { GoogleMapsApiService } from '../src/modules/trip/services/google-maps-api.service';
+import { MockGoogleMapsApiService } from './mock-google-maps-api.service';
 
 export const setupTests = async () => {
   const moduleFixture = await Test.createTestingModule({
@@ -12,6 +14,8 @@ export const setupTests = async () => {
   })
     .overrideProvider(TypeOrmConfigService)
     .useValue(new MockTypeOrmConfigService())
+    .overrideProvider(GoogleMapsApiService)
+    .useValue(new MockGoogleMapsApiService())
     .compile();
 
   const app = moduleFixture.createNestApplication();

@@ -33,7 +33,7 @@ describe('TripController (e2e)', () => {
           id: expect.any(String),
           startAddress: startAddress,
           destinationAddress: destinationAddress,
-          distance: 0,
+          distance: 100,
           price,
         });
       });
