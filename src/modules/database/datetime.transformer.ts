@@ -2,7 +2,7 @@ import { ValueTransformer } from 'typeorm';
 import { DateTime } from 'luxon';
 
 export class DateTimeTransformer implements ValueTransformer {
-  public from(value: Date | null) {
+  public from(value?: Date | null) {
     return value ? DateTime.fromJSDate(value) : null;
   }
 

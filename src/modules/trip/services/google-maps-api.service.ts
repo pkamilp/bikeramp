@@ -23,10 +23,14 @@ export class GoogleMapsApiService {
     return response.data.status === Status.OK;
   }
 
-  public async getDistance(startAddress: string, destinationAddress: string) {
+  public async getDistance(
+    startAddress: string,
+    destinationAddress: string,
+    mode = TravelMode.bicycling,
+  ) {
     const response = await this.client.distancematrix({
       params: {
-        mode: TravelMode.bicycling,
+        mode,
         origins: [startAddress],
         destinations: [destinationAddress],
         key: this.configService.get('GOOGLE_MAPS_API_KEY'),
@@ -36,7 +40,7 @@ export class GoogleMapsApiService {
     if (response.data.status === Status.OK) {
       const element = response.data.rows[0].elements[0];
 
-      if (element) {
+      if (element && element.distance) {
         return element.distance.value;
       }
     }

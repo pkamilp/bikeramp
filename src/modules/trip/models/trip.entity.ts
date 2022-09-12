@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { DateTime } from 'luxon';
 
 import { CurrencyEnum } from './currency.enum';
 import { BaseEntity } from '../../database/base.entity';
 import { DateTimeTransformer } from '../../database/datetime.transformer';
-import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'trips' })
 export class Trip extends BaseEntity {
