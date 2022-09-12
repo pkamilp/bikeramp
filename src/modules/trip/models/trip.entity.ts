@@ -2,35 +2,36 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { DateTime } from 'luxon';
 
-import { CurrencyEnum } from './currency.enum';
+import { CurrencyCode } from './currency-code.enum';
 import { BaseEntity } from '../../database/base.entity';
 import { DateTimeTransformer } from '../../database/datetime.transformer';
+import { Money } from './money';
 
 @Entity({ name: 'trips' })
 export class Trip extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @ApiProperty()
-  public id!: string;
+  private id!: string;
 
   @Column({ name: 'start_address' })
   @ApiProperty()
-  public startAddress!: string;
+  private startAddress!: string;
 
   @Column({ name: 'destination_address' })
   @ApiProperty()
-  public destinationAddress!: string;
+  private destinationAddress!: string;
 
   @Column()
   @ApiProperty()
-  public distance!: number;
+  private distance!: number;
 
   @Column({ type: 'decimal', precision: 8, scale: 2 })
   @ApiProperty()
-  public price!: number;
+  private price!: number;
 
   @Column()
-  @ApiProperty({ enum: CurrencyEnum })
-  public currency!: CurrencyEnum;
+  @ApiProperty({ enum: CurrencyCode })
+  private currency!: CurrencyCode;
 
   @Column({
     type: 'timestamptz',
@@ -38,5 +39,22 @@ export class Trip extends BaseEntity {
     transformer: new DateTimeTransformer(),
   })
   @ApiProperty({ type: String })
-  public deliveryDate!: DateTime;
+  private deliveryDate!: DateTime;
+
+  static create(
+    startAddress: string,
+    destinationAddress: string,
+    distance: number,
+    price: Money,
+    deliveryDate: DateTime,
+  ) {
+    const trip = new Trip();
+    trip.startAddress = startAddress;
+    trip.destinationAddress = destinationAddress;
+    trip.distance = distance;
+    trip.price = price.value;
+    trip.currency = price.currency;
+    trip.deliveryDate = deliveryDate;
+    return trip;
+  }
 }
