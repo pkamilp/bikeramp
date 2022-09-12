@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import { Trip } from '../models/trip.entity';
 import { WeeklyStatsDto } from '../dto/response/weekly-stats.dto';
 import { MonthlyStatsDto } from '../dto/response/monthly-stats.dto';
-import { CurrencyEnum } from '../models/currency.enum';
+import { CurrencyCode } from '../models/currency-code.enum';
 
 @Injectable()
 export class TripQuery {
@@ -27,7 +27,7 @@ export class TripQuery {
     return new WeeklyStatsDto(
       resp ? Number(resp.distance) : 0,
       resp ? Number(resp.price) : 0,
-      resp ? resp.currency : CurrencyEnum.PLN,
+      resp ? resp.currency : CurrencyCode.PLN,
     );
   }
 

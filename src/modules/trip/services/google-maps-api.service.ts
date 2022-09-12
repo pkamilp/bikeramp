@@ -8,7 +8,7 @@ export class GoogleMapsApiService {
   private readonly client: Client;
 
   constructor(private readonly configService: ConfigService) {
-    this.apiKey = this.configService.get('GOOGLE_MAPS_API_KEY');
+    this.apiKey = this.configService.get('GOOGLE_MAPS_API_KEY') as string;
     this.client = new Client({});
   }
 
@@ -16,7 +16,7 @@ export class GoogleMapsApiService {
     const response = await this.client.geocode({
       params: {
         address,
-        key: this.configService.get('GOOGLE_MAPS_API_KEY'),
+        key: this.apiKey,
       },
     });
 
@@ -33,7 +33,7 @@ export class GoogleMapsApiService {
         mode,
         origins: [startAddress],
         destinations: [destinationAddress],
-        key: this.configService.get('GOOGLE_MAPS_API_KEY'),
+        key: this.apiKey,
       },
     });
 

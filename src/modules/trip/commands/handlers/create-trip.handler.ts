@@ -3,9 +3,10 @@ import { BadRequestException } from '@nestjs/common';
 
 import { CreateTripCommand } from '../create-trip.command';
 import { Trip } from '../../models/trip.entity';
-import { CurrencyEnum } from '../../models/currency.enum';
+import { CurrencyCode } from '../../models/currency-code.enum';
 import { TripRepository } from '../../repositories/trip.repository';
 import { GoogleMapsApiService } from '../../services/google-maps-api.service';
+import { Money } from '../../models/money';
 
 @CommandHandler(CreateTripCommand)
 export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
@@ -30,13 +31,13 @@ export class CreateTripHandler implements ICommandHandler<CreateTripCommand> {
 
     const distance = await this.googleMapsApiService.getDistance(startAddress, destinationAddress);
 
-    const trip = new Trip();
-    trip.startAddress = startAddress;
-    trip.destinationAddress = destinationAddress;
-    trip.distance = distance;
-    trip.price = price;
-    trip.currency = CurrencyEnum.PLN;
-    trip.deliveryDate = deliveryDate;
+    const trip = Trip.create(
+      startAddress,
+      destinationAddress,
+      distance,
+      Money.create(price, CurrencyCode.PLN),
+      deliveryDate,
+    );
 
     await this.tripRepository.save(trip);
 

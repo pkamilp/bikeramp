@@ -6,7 +6,8 @@ import { setupTests } from './setup';
 import { cleanup } from './cleanup';
 import { TripRepository } from '../src/modules/trip/repositories/trip.repository';
 import { Trip } from '../src/modules/trip/models/trip.entity';
-import { CurrencyEnum } from '../src/modules/trip/models/currency.enum';
+import { CurrencyCode } from '../src/modules/trip/models/currency-code.enum';
+import { Money } from '../src/modules/trip/models/money';
 
 describe('StatController (e2e)', () => {
   let app: INestApplication;
@@ -29,21 +30,21 @@ describe('StatController (e2e)', () => {
   });
 
   it('will properly return weekly stats', async () => {
-    const firstTrip = new Trip();
-    firstTrip.distance = 39000;
-    firstTrip.deliveryDate = DateTime.now();
-    firstTrip.price = 49;
-    firstTrip.currency = CurrencyEnum.PLN;
-    firstTrip.startAddress = 'start address';
-    firstTrip.destinationAddress = 'destination address';
+    const firstTrip = Trip.create(
+      'start address',
+      'destination address',
+      39000,
+      Money.create(49, CurrencyCode.PLN),
+      DateTime.now(),
+    );
 
-    const secondTrip = new Trip();
-    secondTrip.distance = 1000;
-    secondTrip.deliveryDate = DateTime.now();
-    secondTrip.price = 0.75;
-    secondTrip.currency = CurrencyEnum.PLN;
-    secondTrip.startAddress = 'start address';
-    secondTrip.destinationAddress = 'destination address';
+    const secondTrip = Trip.create(
+      'start address',
+      'destination address',
+      1000,
+      Money.create(0.75, CurrencyCode.PLN),
+      DateTime.now(),
+    );
 
     await tripRepository.save([firstTrip, secondTrip]);
 
@@ -61,29 +62,29 @@ describe('StatController (e2e)', () => {
   it('will properly return monthly stats', async () => {
     const now = DateTime.now();
 
-    const firstTrip = new Trip();
-    firstTrip.distance = 8000;
-    firstTrip.deliveryDate = now.set({ day: 4 });
-    firstTrip.price = 22.75;
-    firstTrip.currency = CurrencyEnum.PLN;
-    firstTrip.startAddress = 'start address';
-    firstTrip.destinationAddress = 'destination address';
+    const firstTrip = Trip.create(
+      'start address',
+      'destination address',
+      8000,
+      Money.create(22.75, CurrencyCode.PLN),
+      now.set({ day: 4 }),
+    );
 
-    const secondTrip = new Trip();
-    secondTrip.distance = 4000;
-    secondTrip.deliveryDate = now.set({ day: 4 });
-    secondTrip.price = 22.75;
-    secondTrip.currency = CurrencyEnum.PLN;
-    secondTrip.startAddress = 'start address';
-    secondTrip.destinationAddress = 'destination address';
+    const secondTrip = Trip.create(
+      'start address',
+      'destination address',
+      4000,
+      Money.create(22.75, CurrencyCode.PLN),
+      now.set({ day: 4 }),
+    );
 
-    const thirdTrip = new Trip();
-    thirdTrip.distance = 3000;
-    thirdTrip.deliveryDate = now.set({ day: 5 });
-    thirdTrip.price = 15.5;
-    thirdTrip.currency = CurrencyEnum.PLN;
-    thirdTrip.startAddress = 'start address';
-    thirdTrip.destinationAddress = 'destination address';
+    const thirdTrip = Trip.create(
+      'start address',
+      'destination address',
+      3000,
+      Money.create(15.5, CurrencyCode.PLN),
+      now.set({ day: 5 }),
+    );
 
     await tripRepository.save([firstTrip, secondTrip, thirdTrip]);
 
