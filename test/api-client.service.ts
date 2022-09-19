@@ -4,9 +4,9 @@ import request from 'supertest';
 
 @Injectable()
 export class ApiClientService {
-  private url!: string;
+  private url: string;
 
-  public setUrl(url: string) {
+  constructor(url: string) {
     this.url = url;
   }
 

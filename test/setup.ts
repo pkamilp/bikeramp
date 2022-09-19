@@ -10,7 +10,7 @@ import { MockGoogleMapsApiService } from './mock-google-maps-api.service';
 export const setupTests = async () => {
   const moduleFixture = await Test.createTestingModule({
     imports: [AppModule],
-    providers: [ApiClientService],
+    providers: [],
   })
     .overrideProvider(TypeOrmConfigService)
     .useValue(new MockTypeOrmConfigService())
@@ -22,8 +22,7 @@ export const setupTests = async () => {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   await app.init();
 
-  const apiClient = app.get(ApiClientService);
-  apiClient.setUrl(app.getHttpServer());
+  const apiClient = new ApiClientService(app.getHttpServer());
 
   return { app, apiClient };
 };
